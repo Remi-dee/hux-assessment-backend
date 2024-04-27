@@ -1,28 +1,29 @@
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require("express-async-handler");
 
-const Contact = require('../models/contactModel')
-const User = require('../models/userModel')
+const Contact = require("../models/contactModel");
+const User = require("../models/userModel");
 
 // @desc    Get contacts
 // @route   GET /api/contacts
 // @access  Private
 const getContacts = asyncHandler(async (req, res) => {
-  const contacts = await Contact.find({ user: req.user.id })
+  const contacts = await Contact.find({ user: req.user.id });
 
-  res.status(200).json(contacts)
-})
-
-
+  res.status(200).json(contacts);
+});
 
 // @desc    Get a single contact by ID
 // @route   GET /api/contacts/:id
 // @access  Private
 const getContactById = asyncHandler(async (req, res) => {
-  const contact = await Contact.findOne({ _id: req.params.id, user: req.user.id });
+  const contact = await Contact.findOne({
+    _id: req.params.id,
+    user: req.user.id,
+  });
 
   if (!contact) {
     res.status(404);
-    throw new Error('Contact not found');
+    throw new Error("Contact not found");
   }
 
   res.status(200).json(contact);
@@ -32,10 +33,10 @@ const getContactById = asyncHandler(async (req, res) => {
 // @route   POST /api/contacts
 // @access  Private
 const setContact = asyncHandler(async (req, res) => {
-  const{firstName, lastName, phoneNumber} = req.body
-  if (!req.body.text) {
-    res.status(400)
-    throw new Error('Please add a text field')
+  const { firstName, lastName, phoneNumber } = req.body;
+  if (!req.body) {
+    res.status(400);
+    throw new Error("Please add a text field");
   }
 
   const contact = await Contact.create({
@@ -43,73 +44,77 @@ const setContact = asyncHandler(async (req, res) => {
     lastName,
     phoneNumber,
     user: req.user.id,
-  })
+  });
 
-  res.status(200).json(contact)
-})
+  res.status(200).json(contact);
+});
 
 // @desc    Update contact
 // @route   PUT /api/contacts/:id
 // @access  Privater
 const updateContact = asyncHandler(async (req, res) => {
-  const contact = await Contact.findById(req.params.id)
+  const contact = await Contact.findById(req.params.id);
 
   if (!contact) {
-    res.status(400)
-    throw new Error('Contact not found')
+    res.status(400);
+    throw new Error("Contact not found");
   }
 
   // Check for user
   if (!req.user) {
-    res.status(401)
-    throw new Error('User not found')
+    res.status(401);
+    throw new Error("User not found");
   }
 
   // Make sure the logged in user matches the contact user
   if (contact.user.toString() !== req.user.id) {
-    res.status(401)
-    throw new Error('User not authorized')
+    res.status(401);
+    throw new Error("User not authorized");
   }
 
-  const updatedContact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  })
+  const updatedContact = await Contact.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
 
-  res.status(200).json(updatedContact)
-})
+  res.status(200).json(updatedContact);
+});
 
 // @desc    Delete contact
 // @route   DELETE /api/contacts/:id
 // @access  Private
 const deleteContact = asyncHandler(async (req, res) => {
-  const contact = await Contact.findById(req.params.id)
+  const contact = await Contact.findById(req.params.id);
 
   if (!contact) {
-    res.status(400)
-    throw new Error('Contact not found')
+    res.status(400);
+    throw new Error("Contact not found");
   }
 
   // Check for user
   if (!req.user) {
-    res.status(401)
-    throw new Error('User not found')
+    res.status(401);
+    throw new Error("User not found");
   }
 
   // Make sure the logged in user matches the contact user
   if (contact.user.toString() !== req.user.id) {
-    res.status(401)
-    throw new Error('User not authorized')
+    res.status(401);
+    throw new Error("User not authorized");
   }
 
-  await contact.remove()
+  await contact.remove();
 
-  res.status(200).json({ id: req.params.id })
-})
+  res.status(200).json({ id: req.params.id });
+});
 
 module.exports = {
   getContacts,
   setContact,
   updateContact,
   deleteContact,
-  getContactById
-}
+  getContactById,
+};
