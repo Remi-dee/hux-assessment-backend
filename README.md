@@ -15,3 +15,23 @@ This is the backend repository for the Contact Management application. It provid
 
 ```bash
 git clone https://github.com/yourusername/contact-management-backend.git
+```
+
+
+
+2. Navigate to the project directory:
+
+```bash
+cd contact-management-backend
+
+```
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
+
+```bash
+npm run start
