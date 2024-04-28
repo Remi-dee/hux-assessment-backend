@@ -6,7 +6,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const contactRoutes = require("./routes/contactRoutes");
-const port = 2000  ||process.env.PORT ;
+const port =   5000  ;
 
 const corsOptions = {
   origin: true,
