@@ -7,7 +7,9 @@ const User = require("../models/userModel");
 // @route   GET /api/contacts
 // @access  Private
 const getContacts = asyncHandler(async (req, res) => {
-  const contacts = await Contact.find({ user: req.user.id });
+  const contacts = await Contact.find({ user: req.user.id }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json(contacts);
 });
