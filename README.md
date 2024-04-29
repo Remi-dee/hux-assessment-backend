@@ -7,7 +7,7 @@ This is the backend repository for the Contact Management application. It provid
 - **Framework**: Express.js
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
-- **Deployment**: Heroku
+- **Deployment**: Onrender
 
 ## Local Setup
 
@@ -16,8 +16,6 @@ This is the backend repository for the Contact Management application. It provid
 ```bash
 git clone https://github.com/yourusername/contact-management-backend.git
 ```
-
-
 
 2. Navigate to the project directory:
 
@@ -30,6 +28,10 @@ cd contact-management-backend
 ```bash
 npm install
 ```
+4. Create .env file and copy the details from .envExample file
+I have sent the details for MONGO_URI via email, please add that url to MONGO_URI variable in your .env file.
+But you can also create your own mongoDb with atlas and copy your MONGO_URI
+To create a database, follow this link "www.mongodb.com/basics/create-database"
 
 4. Start the development server:
 
