@@ -36,9 +36,10 @@ const getContactById = asyncHandler(async (req, res) => {
 // @access  Private
 const setContact = asyncHandler(async (req, res) => {
   const { firstName, lastName, phoneNumber } = req.body;
-  if (!req.body) {
+  // Check if any of the required properties are missing or empty
+  if (!firstName || !lastName || !phoneNumber) {
     res.status(400);
-    throw new Error("Please add a text field");
+    throw new Error("Please provide values for all required fields");
   }
 
   const contact = await Contact.create({
